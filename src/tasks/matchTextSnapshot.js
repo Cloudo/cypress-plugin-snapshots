@@ -20,14 +20,14 @@ function matchTextSnapshot({
   testFile,
 } = {}) {
   const config = merge({}, cloneDeep(getConfig()), options)
-  const snapshotFile = getSnapshotFilename(testFile)
+  const snapshotFile = getSnapshotFilename(testFile, snapshotTitle)
   const expectedRaw = getSnapshot(snapshotFile, snapshotTitle, dataType)
   let expected = applyReplace(expectedRaw, config.replace)
-  const actual = keepKeysFromExpected(
-    subjectToSnapshot(subject, dataType, config),
-    expected,
-    config
-  )
+  let actual = keepKeysFromExpected(subjectToSnapshot(subject, dataType, config), expected, config)
+
+  if (typeof actual === 'string' && actual[0] === '"') {
+    actual = JSON.parse(actual)
+  }
 
   const exists = expected !== false
 

@@ -102,7 +102,11 @@ function readFile(filename) {
 function updateSnapshot(filename, snapshotTitle, subject, dataType = TYPE_JSON) {
   const store = readFile(filename)
   if (dataType === TYPE_JSON) {
-    store[snapshotTitle] = JSON.parse(subject)
+    try {
+      store[snapshotTitle] = JSON.parse(subject)
+    } catch (e) {
+      store[snapshotTitle] = subject
+    }
   } else {
     store[snapshotTitle] = subject
   }

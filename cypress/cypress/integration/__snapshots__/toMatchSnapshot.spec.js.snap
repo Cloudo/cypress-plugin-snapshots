@@ -50,3 +50,8 @@ exports[`toMatchSnapshot > toMatchSnapshot - html escaping #0`] = `
   />
 </span>
 `;
+
+exports[`toMatchSnapshot > toMatchSnapshot - multiline string #0`] = `
+foo
+bar
+`;

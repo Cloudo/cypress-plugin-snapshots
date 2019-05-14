@@ -16,4 +16,13 @@ describe('toMatchSnapshot', () => {
       cy.get('#input-element').toMatchSnapshot()
     })
   })
+
+  it('toMatchSnapshot - multiline string', () => {
+    cy.wrap(
+      `
+foo
+bar
+`
+    ).toMatchSnapshot()
+  })
 })
