@@ -1,7 +1,7 @@
-
-const { initConfig, CONFIG_KEY } = require('./src/config');
-const initServer = require('./src/server/initServer');
-const tasks = require('./src/tasks/');
+const { merge } = require('lodash')
+const { initConfig, CONFIG_KEY } = require('./src/config')
+const initServer = require('./src/server/initServer')
+const tasks = require('./src/tasks/')
 
 /**
  * Initializes the plugin:
@@ -10,27 +10,26 @@ const tasks = require('./src/tasks/');
  * @param {Function} on - Method to register tasks
  * @param {Object} globalConfig - Object containing global Cypress config
  */
-function initPlugin(on, globalConfig = {
-}) {
-  const config = initConfig(globalConfig.env[CONFIG_KEY]);
-  initServer(config);
+function initPlugin(on, globalConfig = {}, jsConfig = {}) {
+  const config = initConfig(merge(globalConfig.env[CONFIG_KEY], jsConfig))
+  initServer(config)
 
   // Adding sub objects/keys to `Cypress.env` that don't exist in `cypress.json` doesn't work.
   // That's why the config is stringified and parsed again in `src/utils/commands/getConfig.js#fixConfig`.
-  globalConfig.env[CONFIG_KEY] = JSON.stringify(config);
+  globalConfig.env[CONFIG_KEY] = JSON.stringify(config)
 
   on('before:browser:launch', (browser = {}, args) => {
     if (browser.name === 'chrome') {
-      args.push('--font-render-hinting=medium');
-      args.push('--enable-font-antialiasing');
-      args.push('--disable-gpu');
+      args.push('--font-render-hinting=medium')
+      args.push('--enable-font-antialiasing')
+      args.push('--disable-gpu')
     }
-    return args;
-  });
+    return args
+  })
 
-  on('task', tasks);
+  on('task', tasks)
 }
 
 module.exports = {
-  initPlugin
-};
+  initPlugin,
+}
