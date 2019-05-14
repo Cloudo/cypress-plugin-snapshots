@@ -1,6 +1,6 @@
-/* globals Cypress, before, after, cy */
+/* globals Cypress */
 /* eslint-env browser */
-const { CONFIG_KEY } = require('../../config');
+const { CONFIG_KEY } = require('../../config')
 
 /**
  * Check if config in `Cypress.env` is stringified JSON.
@@ -8,22 +8,22 @@ const { CONFIG_KEY } = require('../../config');
  */
 function fixConfig() {
   if (typeof Cypress === 'undefined') {
-    throw new Error('Please use from within Cypress.io');
+    throw new Error('Please use from within Cypress.io')
   }
 
   if (typeof Cypress.env(CONFIG_KEY) === 'string') {
-    Cypress.env(CONFIG_KEY, JSON.parse(Cypress.env(CONFIG_KEY)));
+    Cypress.env(CONFIG_KEY, JSON.parse(Cypress.env(CONFIG_KEY)))
   }
 }
 
 function getConfig() {
-  fixConfig();
-  const config = Cypress.env(CONFIG_KEY);
+  fixConfig()
+  const config = Cypress.env(CONFIG_KEY)
   if (!config) {
-    throw new Error('Config cannot be found.');
+    throw new Error('Config cannot be found.')
   }
 
-  return config;
+  return config
 }
 
-module.exports = getConfig;
+module.exports = getConfig

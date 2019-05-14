@@ -1,9 +1,9 @@
-const crypto = require('crypto');
-const { merge, cloneDeep, clone } = require('lodash');
-const { TYPE_JSON } = require('./dataTypes');
+const crypto = require('crypto')
+const { merge, cloneDeep, clone } = require('lodash')
+const { TYPE_JSON } = require('./dataTypes')
 
 function createToken() {
-  return crypto.randomBytes(64).toString('hex');
+  return crypto.randomBytes(64).toString('hex')
 }
 
 const DEFAULT_SCREENSHOT_CONFIG = Object.freeze({
@@ -14,14 +14,14 @@ const DEFAULT_SCREENSHOT_CONFIG = Object.freeze({
   log: false,
   scale: false,
   timeout: 30000,
-});
+})
 
 const DEFAULT_IMAGE_CONFIG = Object.freeze({
   createDiffImage: true,
   resizeDevicePixelRatio: true,
   threshold: 0.1,
   thresholdType: 'percent', // can be 'percent' or 'pixel'
-});
+})
 
 const DEFAULT_CONFIG = Object.freeze({
   autoCleanUp: false,
@@ -38,7 +38,7 @@ const DEFAULT_CONFIG = Object.freeze({
     html: {
       parser: 'html',
       tabWidth: 2,
-      endOfLine: 'lf'
+      endOfLine: 'lf',
     },
   },
   screenshotConfig: clone(DEFAULT_SCREENSHOT_CONFIG),
@@ -47,67 +47,59 @@ const DEFAULT_CONFIG = Object.freeze({
   serverPort: 2121,
   token: createToken(),
   updateSnapshots: false,
-});
+})
 
-const CONFIG_KEY = 'cypress-plugin-snapshots';
+const CONFIG_KEY = 'cypress-plugin-snapshots'
 
-let config = cloneDeep(DEFAULT_CONFIG);
+let config = cloneDeep(DEFAULT_CONFIG)
 
 function initConfig(initialConfig) {
   if (initialConfig) {
-    config = merge(config, initialConfig);
+    config = merge(config, initialConfig)
   }
-  return config;
+  return config
 }
 
 function getConfig() {
-  return config;
+  return config
 }
 
 function getImageConfig(options = {}) {
   return Object.keys(DEFAULT_IMAGE_CONFIG)
-    .filter((key) => options && options[key] !== undefined)
-    .reduce(
-      (imageConfig, key) => {
-        imageConfig[key] = options[key];
-        return imageConfig;
-      },
-      merge({}, DEFAULT_IMAGE_CONFIG, getConfig().imageConfig)
-    );
+    .filter(key => options && options[key] !== undefined)
+    .reduce((imageConfig, key) => {
+      imageConfig[key] = options[key]
+      return imageConfig
+    }, merge({}, DEFAULT_IMAGE_CONFIG, getConfig().imageConfig))
 }
-
 
 function getScreenshotConfig(options = {}) {
   const screenshotConfig = Object.keys(DEFAULT_SCREENSHOT_CONFIG)
-    .filter((key) => options && options[key] !== undefined)
-    .reduce(
-      (imageConfig, key) => {
-        imageConfig[key] = options[key];
-        return imageConfig;
-      },
-      merge({}, DEFAULT_SCREENSHOT_CONFIG, getConfig().screenshotConfig)
-    );
+    .filter(key => options && options[key] !== undefined)
+    .reduce((imageConfig, key) => {
+      imageConfig[key] = options[key]
+      return imageConfig
+    }, merge({}, DEFAULT_SCREENSHOT_CONFIG, getConfig().screenshotConfig))
 
-  screenshotConfig.blackout = (screenshotConfig.blackout || []);
-  screenshotConfig.blackout.push('.snapshot-diff');
-  return screenshotConfig;
+  screenshotConfig.blackout = screenshotConfig.blackout || []
+  screenshotConfig.blackout.push('.snapshot-diff')
+  return screenshotConfig
 }
 
 function getServerUrl(suppliedConfig) {
-  const cfg = suppliedConfig || getConfig();
-  return `http://${cfg.serverHost}:${cfg.serverPort}/?token=${cfg.token}`;
+  const cfg = suppliedConfig || getConfig()
+  return `http://${cfg.serverHost}:${cfg.serverPort}/?token=${cfg.token}`
 }
 
 function shouldNormalize(dataType, suppliedConfig) {
-  const cfg = suppliedConfig && suppliedConfig.normalizeJson !== undefined ?
-    suppliedConfig : getConfig();
-  return dataType === TYPE_JSON && cfg.normalizeJson;
+  const cfg =
+    suppliedConfig && suppliedConfig.normalizeJson !== undefined ? suppliedConfig : getConfig()
+  return dataType === TYPE_JSON && cfg.normalizeJson
 }
 
 function getPrettierConfig(dataType, suppliedConfig) {
-  const cfg = suppliedConfig && suppliedConfig.prettierConfig ?
-    suppliedConfig : getConfig();
-  return cfg.prettier && cfg.prettierConfig ? cfg.prettierConfig[dataType] : undefined;
+  const cfg = suppliedConfig && suppliedConfig.prettierConfig ? suppliedConfig : getConfig()
+  return cfg.prettier && cfg.prettierConfig ? cfg.prettierConfig[dataType] : undefined
 }
 
 module.exports = {
@@ -121,4 +113,4 @@ module.exports = {
   getServerUrl,
   initConfig,
   shouldNormalize,
-};
+}

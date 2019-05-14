@@ -1,5 +1,5 @@
-const toMatchSnapshot = require('./toMatchSnapshot');
-const toMatchImageSnapshot = require('./toMatchImageSnapshot');
+const toMatchSnapshot = require('./toMatchSnapshot')
+const toMatchImageSnapshot = require('./toMatchImageSnapshot')
 
 module.exports = {
   toMatchSnapshot,

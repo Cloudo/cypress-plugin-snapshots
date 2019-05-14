@@ -1,31 +1,31 @@
 function formatJson(subject) {
-  return JSON.stringify(subject, undefined, 2);
+  return JSON.stringify(subject, undefined, 2)
 }
 
 function formatNormalizedJson(subject) {
-  return formatJson(normalizeObject(subject));
+  return formatJson(normalizeObject(subject))
 }
 
 function normalizeObject(subject) {
   if (Array.isArray(subject)) {
-    return subject.map(normalizeObject);
+    return subject.map(normalizeObject)
   }
 
   if (typeof subject === 'object' && subject !== null) {
-    const keys = Object.keys(subject);
-    keys.sort();
+    const keys = Object.keys(subject)
+    keys.sort()
 
     return keys.reduce((result, key) => {
-      result[key] = normalizeObject(subject[key]);
-      return result;
-    }, {});
+      result[key] = normalizeObject(subject[key])
+      return result
+    }, {})
   }
 
-  return subject;
+  return subject
 }
 
 module.exports = {
   formatNormalizedJson,
   formatJson,
   normalizeObject,
-};
+}

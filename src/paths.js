@@ -5,4 +5,4 @@ module.exports = {
   PATH_DIFF_JS: 'diff2html/dist/diff2html.js',
   PATH_JS: './assets/script.js',
   PATH_SOCKET_JS: 'socket.io-client/dist/socket.io.js',
-};
+}

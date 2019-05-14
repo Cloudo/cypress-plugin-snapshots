@@ -1,5 +1,5 @@
 function getTestTitle(test) {
-  return (test.parent && test.parent.title ? `${getTestTitle(test.parent)} > ` : '') + test.title;
+  return (test.parent && test.parent.title ? `${getTestTitle(test.parent)} > ` : '') + test.title
 }
 
-module.exports = getTestTitle;
+module.exports = getTestTitle

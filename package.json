@@ -76,12 +76,6 @@
     "jest": "^24.1.0",
     "rewire": "^4.0.1"
   },
-  "prettier": {
-    "printWidth": 100,
-    "semi": true,
-    "singleQuote": true,
-    "trailingComma": "es5"
-  },
   "eslintConfig": {
     "extends": [
       "airbnb-base",

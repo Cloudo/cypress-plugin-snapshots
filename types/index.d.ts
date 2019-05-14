@@ -1,5 +1,4 @@
-    
-// -- Example Usage: 
+// -- Example Usage:
 // -- cypress/tsconfig.json
 // {
 //   "compilerOptions": {
@@ -9,17 +8,22 @@
 
 declare namespace Cypress {
   interface Chainable<Subject = any> {
-    toMatchSnapshot(options?: Partial<{
-      ignoreExtralFields: boolean,
-      ignoreExtraArrayItems: boolean,
-      normalizeJson: boolean,
-      replace: any
-    }>): Chainable<null>;
+    toMatchSnapshot(
+      options?: Partial<{
+        ignoreExtralFields: boolean
+        ignoreExtraArrayItems: boolean
+        normalizeJson: boolean
+        replace: any
+      }>
+    ): Chainable<null>
 
-    toMatchImageSnapshot(options?: Partial<{
-      createDiffImage: boolean,
-      threshold: number,
-      thresholdType: "percent" | "pixels",
-    }> & Partial<ScreenshotDefaultsOptions>): Chainable<null>;
+    toMatchImageSnapshot(
+      options?: Partial<{
+        createDiffImage: boolean
+        threshold: number
+        thresholdType: 'percent' | 'pixels'
+      }> &
+        Partial<ScreenshotDefaultsOptions>
+    ): Chainable<null>
   }
 }
