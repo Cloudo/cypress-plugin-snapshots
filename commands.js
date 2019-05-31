@@ -5,6 +5,7 @@ const {
   cloneDeep
 } = require('lodash');
 const { initUi } = require('./src/ui');
+const { initConfig } = require('./src/config');
 const commands = require('./src/commands/index');
 const cleanUpSnapshots = require('./src/utils/commands/cleanupSnapshots');
 const getConfig = require('./src/utils/commands/getConfig');
@@ -26,7 +27,8 @@ function addCommand(commandName, method) {
 
 function initCommands() {
   // Initialize config by getting it once
-  getConfig();
+  const config = getConfig();
+  initConfig(config)
 
   // Inject CSS & JavaScript
   before(() => {
